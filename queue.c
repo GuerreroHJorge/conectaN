@@ -1,7 +1,6 @@
 //
 // Created by Usuario on 06/12/2021.
 //
-
 #include "queue.h"
 #include <stdlib.h>
 #include "conectaN.h"
@@ -42,13 +41,13 @@ void queue_offer(Queue* q, Movimiento *mov)
     q->count++;
 }
 
-char queue_poll(Queue* q)
+Movimiento *queue_poll(Queue* q)
 {
     Node_ref toRemove = q->First;
 
     if(toRemove != NULL)
     {
-        char dataToReturn = toRemove->dato;
+        Movimiento *dataToReturn = toRemove->dato;
         q->First = toRemove->next;
         free(toRemove);
         q->count--;
@@ -65,3 +64,4 @@ void queue_destroy(Queue* q)
 
     free(q);
 }
+
