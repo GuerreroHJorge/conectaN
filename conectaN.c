@@ -63,9 +63,10 @@ void nuevoMovimiento(Juego *juego,int jugador, int renglon, int columna){
         queue_offer(juego->cola,mov);
         if(juego->turno > juego->N){
             ganoColumna(juego, juego->N, mov);
-            //ganoRenglon();
-            //ganoDiagonalDerecha();
-            //ganoDiagonalIzquierda();
+            ganoColumna(juego, juego->N, mov);
+            ganoRenglon(juego, juego->N, mov);
+            ganoDiagonalDerecha(juego, juego->N, mov);
+            ganoDiagonalIzquierda(juego, juego->N, mov);
         }
     } else{
         Movimiento **array = juego->jugador2;
@@ -73,9 +74,9 @@ void nuevoMovimiento(Juego *juego,int jugador, int renglon, int columna){
         queue_offer(juego->cola,mov);
         if(((juego->turno)-1) > juego->N){
             ganoColumna(juego, juego->N, mov);
-            //ganoRenglon();
-            //ganoDiagonalDerecha();
-            //ganoDiagonalIzquierda();
+            ganoRenglon(juego, juego->N, mov);
+            ganoDiagonalDerecha(juego, juego->N, mov);
+            ganoDiagonalIzquierda(juego, juego->N, mov);
         }
         juego->turno++;
     }
@@ -84,62 +85,339 @@ void nuevoMovimiento(Juego *juego,int jugador, int renglon, int columna){
 }
 
 int ganoColumna(Juego *juego, int N, Movimiento *mov){
-    int i = 1;
-    int j = 0;
-    int juntas = 1;
-    if(mov->jugador == 1){
-        int renglon = mov->renglon - 1;
-        Movimiento **array = juego->jugador1;
-        while (j <= N) {
-            int b = 0;
-            renglon--;
-            i = 1;
-            while (b==0 && i <= juego->turno) {
-                if ((*(array + i))->columna == mov->columna && (*(array + i))->renglon == renglon) {
-                    juntas++;
-                    b=1;
-                }
-                i++;
-            }
-            j++;
-        }
-    }else{
-        int renglon = mov->renglon - 1;
-        Movimiento **array2 = juego->jugador2;
-        while (j <= N) {
-            int b = 0;
-            renglon--;
-            i = 1;
-            while (b==0 && i <= juego->turno) {
-                if ((*(array2 + i))->columna == mov->columna && (*(array2 + i))->renglon == renglon) {
-                    juntas++;
-                    b=1;
-                }
-                i++;
-            }
-            j++;
-        }
-    }
+    
+    int renglon = mov->renglon;
+    int columna = mov->columna;
+    int minRenglon = 0;
+    int maxRenglon = 0;
 
-    if(juntas == N)
+    int b = 1;
+    int i;
+
+    if(mov->jugador == 1) {
+        Movimiento **array = juego->jugador1;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            renglon++;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array + i))->columna == columna && (*(array + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        maxRenglon = renglon - 1;
+        //int maxRenglon = renglon - 1;
+
+        b = 1;
+        renglon = mov->renglon;
+        columna = mov->columna;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            renglon--;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array + i))->columna == columna && (*(array + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        minRenglon = renglon + 1;
+        //int minRenglon = renglon + 1;
+    }else{
+        Movimiento **array2 = juego->jugador2;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            renglon++;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array2 + i))->columna == columna && (*(array2 + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        maxRenglon = renglon - 1;
+        //int maxRenglon = renglon - 1;
+
+        b = 1;
+        renglon = mov->renglon;
+        columna = mov->columna;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            renglon--;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array2 + i))->columna == columna && (*(array2 + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        minRenglon = renglon + 1;
+        //int minRenglon = renglon + 1;
+    }
+    int diferencia = N - 1;
+    if((maxRenglon - diferencia) == minRenglon)
         return 1;
     else
         return 0;
 }
 
-int ganoRenglon(Juego *juego, int N, int jugador){
+int ganoRenglon(Juego *juego, int N, Movimiento* mov){
 
-    return 1;
+    int renglon = mov->renglon;
+    int columna = mov->columna;
+    int minColumna = 0;
+    int maxColumna = 0;
+
+    int b = 1;
+    int i;
+
+    if(mov->jugador == 1) {
+        Movimiento **array = juego->jugador1;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            columna++;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array + i))->columna == columna && (*(array + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        maxColumna = columna - 1;
+        //int maxRenglon = renglon - 1;
+
+        b = 1;
+        renglon = mov->renglon;
+        columna = mov->columna;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            columna--;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array + i))->columna == columna && (*(array + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        minColumna = columna + 1;
+        //int minRenglon = renglon + 1;
+    }else{
+        Movimiento **array2 = juego->jugador2;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            columna++;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array2 + i))->columna == columna && (*(array2 + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        maxColumna = columna - 1;
+        //int maxRenglon = renglon - 1;
+
+        b = 1;
+        renglon = mov->renglon;
+        columna = mov->columna;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            columna--;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array2 + i))->columna == columna && (*(array2 + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        minColumna = columna + 1;
+        //int minRenglon = renglon + 1;
+    }
+    int diferencia = N - 1;
+    if((maxColumna - diferencia) == minColumna)
+        return 1;
+    else
+        return 0;
 }
 
-int ganoDiagonalDerecha(Juego *juego, int N, int jugador){
+int ganoDiagonalDerecha(Juego *juego, int N, Movimiento* mov){
 
-    return 1;
+    int renglon = mov->renglon;
+    int columna = mov->columna;
+    int minColumna = 0;
+    int maxColumna = 0;
+
+    int b = 1;
+    int i;
+
+    if(mov->jugador == 1) {
+        Movimiento **array = juego->jugador1;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            renglon++;
+            columna++;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array + i))->columna == columna && (*(array + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        maxColumna = columna - 1;
+        //int maxRenglon = renglon - 1;
+
+        b = 1;
+        renglon = mov->renglon;
+        columna = mov->columna;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            renglon--;
+            columna--;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array + i))->columna == columna && (*(array + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        minColumna = columna + 1;
+        //int minRenglon = renglon + 1;
+    }else{
+        Movimiento **array2 = juego->jugador2;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            renglon++;
+            columna++;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array2 + i))->columna == columna && (*(array2 + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        maxColumna = columna - 1;
+        //int maxRenglon = renglon - 1;
+
+        b = 1;
+        renglon = mov->renglon;
+        columna = mov->columna;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            renglon--;
+            columna--;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array2 + i))->columna == columna && (*(array2 + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        minColumna = columna + 1;
+        //int minRenglon = renglon + 1;
+    }
+    int diferencia = N - 1;
+    if((maxColumna - diferencia) == minColumna)
+        return 1;
+    else
+        return 0;
 }
 
-int ganoDiagonalIzquierda(Juego *juego, int N, int jugador){
+int ganoDiagonalIzquierda(Juego *juego, int N, Movimiento* mov){
 
-    return 1;
+    int renglon = mov->renglon;
+    int columna = mov->columna;
+    int minColumna = 0;
+    int maxColumna = 0;
+
+    int b = 1;
+    int i;
+
+    if(mov->jugador == 1) {
+        Movimiento **array = juego->jugador1;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            renglon++;
+            columna--;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array + i))->columna == columna && (*(array + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        maxColumna = columna + 1;
+        //int maxRenglon = renglon - 1;
+
+        b = 1;
+        renglon = mov->renglon;
+        columna = mov->columna;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            renglon--;
+            columna++;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array + i))->columna == columna && (*(array + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        minColumna = columna - 1;
+        //int minRenglon = renglon + 1;
+    }else{
+        Movimiento **array2 = juego->jugador2;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            renglon++;
+            columna--;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array2 + i))->columna == columna && (*(array2 + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        maxColumna = columna + 1;
+        //int maxRenglon = renglon - 1;
+
+        b = 1;
+        renglon = mov->renglon;
+        columna = mov->columna;
+        while(b == 1) {
+            b = 0;
+            i = 1;
+            renglon--;
+            columna++;
+            while (b == 0 && i <= juego->turno) {
+                if ((*(array2 + i))->columna == columna && (*(array2 + i))->renglon == renglon)
+                    b = 1;
+                else
+                    i++;
+            }
+        }
+        minColumna = columna - 1;
+        //int minRenglon = renglon + 1;
+    }
+    int diferencia = N - 1;
+    if((maxColumna + diferencia) == minColumna)
+        return 1;
+    else
+        return 0;
 }
 
 void printArreglos(Juego * juego){
@@ -155,7 +433,5 @@ void printArreglos(Juego * juego){
         i++;
     }
 }
-
-
 
 
