@@ -16,12 +16,11 @@ void printArreglos(Juego * juego);
 
 int ganoColumna(Juego* juego, int N, Movimiento* mov);
 
-int ganoRenglon(Juego* juego, int N, int jugador);
+int ganoRenglon(Juego* juego, int N, Movimiento* mov);
 
-int ganoDiagonalDerecha(Juego* juego, int N, int jugador);
+int ganoDiagonalDerecha(Juego* juego, int N, Movimiento* mov);
 
-int ganoDiagonalIzquierda(Juego* juego, int N, int jugador);
-
+int ganoDiagonalIzquierda(Juego* juego, int N, Movimiento* mov);
 
 
 
