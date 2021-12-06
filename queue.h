@@ -21,7 +21,7 @@ typedef struct {
 
 Queue* queue_create();
 void queue_offer(Queue* q, Movimiento *mov);
-char queue_poll(Queue* q);
+Movimiento *queue_poll(Queue* q);
 void queue_destroy(Queue* q);
 
 #endif //CONECTAN_QUEUE_H
