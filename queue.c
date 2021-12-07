@@ -1,9 +1,22 @@
 //
 // Created by Usuario on 06/12/2021.
 //
+
 #include "queue.h"
 #include <stdlib.h>
 #include "conectaN.h"
+/*
+struct Node_struct {
+    Movimiento *dato;
+    struct Node_struct* next;
+}
+
+struct queue{
+    Node_ref First;
+    Node_ref Last;
+    int count;
+}
+
 
 Node_ref newNode(Movimiento *mov)
 {
@@ -65,3 +78,4 @@ void queue_destroy(Queue* q)
     free(q);
 }
 
+*/
