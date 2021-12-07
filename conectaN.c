@@ -1,6 +1,7 @@
 //
 // Created by Usuario on 04/12/2021.
-//#include "conectaN.h"
+//
+#include "conectaN.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <malloc.h>
