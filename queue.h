@@ -7,21 +7,17 @@
 
 #include "conectaN.h"
 
-struct Node_struct {
-    Movimiento *dato;
-    struct Node_struct* next;
-};
 typedef struct Node_struct* Node_ref;
 
-typedef struct {
-    Node_ref First;
-    Node_ref Last;
-    int count;
-} Queue;
+typedef struct queue Queue;
+typedef struct movimiento Movimiento;
 
 Queue* queue_create();
 void queue_offer(Queue* q, Movimiento *mov);
 Movimiento *queue_poll(Queue* q);
 void queue_destroy(Queue* q);
+
+//Queue *regresaCola(Juego *juego);
+
 
 #endif //CONECTAN_QUEUE_H
